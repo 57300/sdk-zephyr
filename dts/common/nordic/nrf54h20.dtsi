@@ -7,7 +7,7 @@
 #include <mem.h>
 #include <nordic/nrf_common.dtsi>
 
-#include <zephyr/dt-bindings/misc/nordic-nrf-ficr-nrf54h20-enga.h>
+#include <zephyr/dt-bindings/misc/nordic-nrf-ficr-nrf54h20.h>
 
 /* Domain IDs. Can be used to specify channel links in IPCT nodes. */
 #define NRF_DOMAIN_ID_APPLICATION 2
@@ -136,10 +136,10 @@
 
 		cpurad_ram0: sram@23000000 {
 			compatible = "mmio-sram";
-			reg = <0x23000000 DT_SIZE_K(64)>;
+			reg = <0x23000000 DT_SIZE_K(192)>;
 			#address-cells = <1>;
 			#size-cells = <1>;
-			ranges = <0x0 0x23000000 0x10000>;
+			ranges = <0x0 0x23000000 0x30000>;
 		};
 
 		cpuapp_peripherals: peripheral@52000000 {
@@ -279,6 +279,18 @@
 				interrupts = <59 NRF_DEFAULT_IRQ_PRIORITY>;
 				status = "disabled";
 			};
+
+			ccm031: ccm@3c000 {
+				compatible = "nordic,nrf-ccm";
+				reg = <0x3c000 0x1000>;
+				interrupts = <60 NRF_DEFAULT_IRQ_PRIORITY>;
+			};
+
+			ecb031: ecb@3d000 {
+				compatible = "nordic,nrf-ecb";
+				reg = <0x3d000 0x1000>;
+				interrupts = <61 NRF_DEFAULT_IRQ_PRIORITY>;
+			};
 		};
 
 		global_peripherals: peripheral@5f000000 {
@@ -338,13 +350,6 @@
 				prescaler = <0>;
 			};
 
-			uart120: uart@8e5000 {
-				compatible = "nordic,nrf-uarte";
-				reg = <0x8e5000 0x1000>;
-				status = "disabled";
-				interrupts = <229 NRF_DEFAULT_IRQ_PRIORITY>;
-			};
-
 			spi120: spi@8e6000 {
 				compatible = "nordic,nrf-spim";
 				reg = <0x8e6000 0x1000>;
@@ -354,6 +359,13 @@
 				max-frequency = <DT_FREQ_M(32)>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+			};
+
+			uart120: uart@8e6000 {
+				compatible = "nordic,nrf-uarte";
+				reg = <0x8e6000 0x1000>;
+				status = "disabled";
+				interrupts = <229 NRF_DEFAULT_IRQ_PRIORITY>;
 			};
 
 			spi121: spi@8e7000 {

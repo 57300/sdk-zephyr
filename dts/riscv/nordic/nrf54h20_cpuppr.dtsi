@@ -4,14 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <nordic/nrf54h20_enga.dtsi>
+#include <nordic/nrf54h20.dtsi>
 
-cpu: &cpuapp {};
-systick: &cpuapp_systick {};
-nvic: &cpuapp_nvic {};
-cpuppr_vevif: &cpuppr_vevif_remote {};
+cpu: &cpuppr {};
+clic: &cpuppr_clic {};
+cpuppr_vevif: &cpuppr_vevif_local {};
 
-/delete-node/ &cpuppr;
+/delete-node/ &cpuapp;
+/delete-node/ &cpuapp_peripherals;
+/delete-node/ &cpuapp_ppb;
+/delete-node/ &cpuapp_ram0;
 /delete-node/ &cpurad;
 /delete-node/ &cpurad_peripherals;
 /delete-node/ &cpurad_ppb;
@@ -20,14 +22,9 @@ cpuppr_vevif: &cpuppr_vevif_remote {};
 / {
 	soc {
 		compatible = "simple-bus";
-		interrupt-parent = <&cpuapp_nvic>;
+		interrupt-parent = <&cpuppr_clic>;
 		ranges;
 	};
-};
-
-&cpuapp_ppb {
-	compatible = "simple-bus";
-	ranges;
 };
 
 &cpusec_bellboard {
@@ -35,7 +32,7 @@ cpuppr_vevif: &cpuppr_vevif_remote {};
 };
 
 &cpuapp_bellboard {
-	compatible = "nordic,nrf-bellboard-local";
+	compatible = "nordic,nrf-bellboard-remote";
 };
 
 &cpurad_bellboard {
@@ -43,9 +40,9 @@ cpuppr_vevif: &cpuppr_vevif_remote {};
 };
 
 &gpiote130 {
-	interrupts = <105 NRF_DEFAULT_IRQ_PRIORITY>;
+	interrupts = <104 NRF_DEFAULT_IRQ_PRIORITY>;
 };
 
 &grtc {
-	interrupts = <109 NRF_DEFAULT_IRQ_PRIORITY>;
+	interrupts = <108 NRF_DEFAULT_IRQ_PRIORITY>;
 };

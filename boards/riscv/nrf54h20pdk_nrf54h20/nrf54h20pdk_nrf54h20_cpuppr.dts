@@ -6,7 +6,7 @@
 
 /dts-v1/;
 
-#include <nordic/nrf54h20_enga_cpuppr.dtsi>
+#include <nordic/nrf54h20_cpuppr.dtsi>
 #include "nrf54h20pdk_nrf54h20-memory_map.dtsi"
 #include "nrf54h20pdk_nrf54h20-ipc_conf.dtsi"
 #include "nrf54h20pdk_nrf54h20-pinctrl.dtsi"
@@ -25,7 +25,7 @@
 		zephyr,console = &uart135;
 		zephyr,code-partition = &cpuppr_code_partition;
 		zephyr,flash = &mram1x;
-		zephyr,sram = &cpuppr_ram3x_region;
+		zephyr,sram = &cpuppr_code_data;
 	};
 };
 

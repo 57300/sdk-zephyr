@@ -98,42 +98,49 @@
 
 		cpuppr_ram3x_region: memory@2fc00000 {
 			compatible = "nordic,owned-memory";
-			reg = <0x2fc00000 DT_SIZE_K(28)>;
+			reg = <0x2fc00000 DT_SIZE_K(64)>;
 			status = "disabled";
 			perm-read;
 			perm-write;
 			perm-execute;
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0x0 0x2fc00000 0x10000>;
+
+			cpuppr_code_data: memory@0 {
+				reg = <0x0 DT_SIZE_K(62)>;
+			};
+
+			cpuapp_cpuppr_ipc_shm: memory@f800 {
+				reg = <0xf800 DT_SIZE_K(1)>;
+			};
+
+			cpuppr_cpuapp_ipc_shm: memory@fc00 {
+				reg = <0xfc00 DT_SIZE_K(1)>;
+			};
 		};
 
-		shared_ram3x_region: memory@2fc07000 {
+		shared_ram3x_region: memory@2fc12000 {
 			compatible = "nordic,owned-memory";
-			reg = <0x2fc07000 DT_SIZE_K(4)>;
+			reg = <0x2fc12000 DT_SIZE_K(8)>;
 			status = "disabled";
 			perm-read;
 			perm-write;
 			#address-cells = <1>;
 			#size-cells = <1>;
-			ranges = <0x0 0x2fc07000 0x1000>;
+			ranges = <0x0 0x2fc12000 0x2000>;
 
-			cpuapp_cpuppr_ipc_shm: memory@0 {
-				reg = <0x0 0x340>;
-			};
-
-			cpuppr_cpuapp_ipc_shm: memory@340 {
-				reg = <0x340 0x340>;
-			};
-
-			cpuapp_dma_region: memory@680 {
+			cpuapp_dma_region: memory@e80 {
 				compatible = "zephyr,memory-region";
-				reg = <0x680 DT_SIZE_K(2)>;
+				reg = <0xe80 DT_SIZE_K(4)>;
 				status = "disabled";
 				#memory-region-cells = <0>;
 				zephyr,memory-region = "DMA_RAM3x_APP";
 			};
 
-			cpurad_dma_region: memory@e80 {
+			cpurad_dma_region: memory@1e80 {
 				compatible = "zephyr,memory-region";
-				reg = <0xe80 0x80>;
+				reg = <0x1e80 0x80>;
 				status = "disabled";
 				#memory-region-cells = <0>;
 				zephyr,memory-region = "DMA_RAM3x_RAD";

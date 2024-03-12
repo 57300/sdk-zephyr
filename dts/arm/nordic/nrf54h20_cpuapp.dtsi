@@ -4,28 +4,28 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <nordic/nrf54h20_enga.dtsi>
+#include <nordic/nrf54h20.dtsi>
 
-cpu: &cpurad {};
-systick: &cpurad_systick {};
-nvic: &cpurad_nvic {};
+cpu: &cpuapp {};
+systick: &cpuapp_systick {};
+nvic: &cpuapp_nvic {};
 cpuppr_vevif: &cpuppr_vevif_remote {};
 
-/delete-node/ &cpuapp;
-/delete-node/ &cpuapp_peripherals;
-/delete-node/ &cpuapp_ppb;
-/delete-node/ &cpuapp_ram0;
 /delete-node/ &cpuppr;
+/delete-node/ &cpurad;
+/delete-node/ &cpurad_peripherals;
+/delete-node/ &cpurad_ppb;
+/delete-node/ &cpurad_ram0;
 
 / {
 	soc {
 		compatible = "simple-bus";
-		interrupt-parent = <&cpurad_nvic>;
+		interrupt-parent = <&cpuapp_nvic>;
 		ranges;
 	};
 };
 
-&cpurad_ppb {
+&cpuapp_ppb {
 	compatible = "simple-bus";
 	ranges;
 };
@@ -35,11 +35,11 @@ cpuppr_vevif: &cpuppr_vevif_remote {};
 };
 
 &cpuapp_bellboard {
-	compatible = "nordic,nrf-bellboard-remote";
+	compatible = "nordic,nrf-bellboard-local";
 };
 
 &cpurad_bellboard {
-	compatible = "nordic,nrf-bellboard-local";
+	compatible = "nordic,nrf-bellboard-remote";
 };
 
 &gpiote130 {
