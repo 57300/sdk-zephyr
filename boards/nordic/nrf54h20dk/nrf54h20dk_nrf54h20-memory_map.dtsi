@@ -191,4 +191,18 @@
 			reg = <0x136000 DT_SIZE_K(24)>;
 		};
 	};
+
+	cpusec_rw_partitions: cpusec-rw-partitions {
+		compatible = "nordic,owned-partitions", "fixed-partitions";
+		status = "disabled";
+		perm-read;
+		perm-write;
+		perm-secure;
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		suit_storage_partition: partition@1eb000 {
+			reg = <0x1eb000 DT_SIZE_K(24)>;
+		};
+	};
 };
